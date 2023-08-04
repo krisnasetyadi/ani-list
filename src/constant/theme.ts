@@ -26,7 +26,7 @@ export const SIZES = {
   fontLg: 16,
   font: 14,
   fontSm: 13,
-  fontXs: 12,
+  fontXs: 10,
 
   // radius
   radius_sm: 8,
@@ -49,9 +49,8 @@ export const SIZES = {
 export const FONTS = {
   fontLg: {
     fontSize: SIZES.fontLg,
-    color: COLORS.text,
-    lineHeight: 20,
-    fontFamily: 'Satoshi-Bold',
+    color: COLORS.title,
+    fontFamily: 'Roboto',
   },
   font: {
     fontSize: SIZES.font,
@@ -61,14 +60,14 @@ export const FONTS = {
   },
   fontSm: {
     fontSize: SIZES.fontSm,
-    color: COLORS.text,
-    fontFamily: 'OpenSans-Regular',
+    color: COLORS.white,
+    letterSpacing: '0.5px',
+    fontFamily: 'Roboto',
   },
   fontXs: {
     fontSize: SIZES.fontXs,
-    color: COLORS.text,
-    lineHeight: 14,
-    fontFamily: 'OpenSans-Regular',
+    color: COLORS.white,
+    fontFamily: 'Roboto',
   },
   h1: { fontSize: SIZES.h1, color: COLORS.title, fontFamily: 'Poppins-SemiBold' },
   h2: { fontSize: SIZES.h2, color: COLORS.title, fontFamily: 'Poppins-SemiBold' },

@@ -1,14 +1,19 @@
 import styled from '@emotion/styled'
+import { COLORS } from '../theme';
 export const Label = styled.label`
   display: block;
-  margin-bottom: 8px; /* Replace 2 with the desired size in px */
+  margin-bottom: 8px; 
   font-size: 14px;
+  font-weight: 600; 
+  font-family:  sans-serif;
 `;
 
 export const Span = styled.span`
   display: block;
-  margin-top: 8px; /* Replace 2 with the desired size in px */
-  margin-bottom: 12px; /* Replace 3 with the desired size in px */
+  margin-top: 8px;
+  margin-bottom: 12px;
+  margin-left: 5px;
   font-size: 14px;
-  color: #666; /* Replace with desired color */
+  font-family: sans-serif;
+  color: ${COLORS.mediumGray};
 `;

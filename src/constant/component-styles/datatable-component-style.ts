@@ -34,7 +34,6 @@ export const Tr = styled.tr`
     background-color: #F3F4F6;
   }
 `
-
 export const Td = styled.td`
   padding-top: 1px;
   padding-bottom: 1px;

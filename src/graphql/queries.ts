@@ -29,6 +29,12 @@ export const GET_DATA_BY_ID = gql`
           native
         }
         status
+        genres
+        episodes
+        duration
+        bannerImage
+        description
+        countryOfOrigin
         startDate {
           day
           month
@@ -37,7 +43,6 @@ export const GET_DATA_BY_ID = gql`
         coverImage {
           medium
         }
-        countryOfOrigin
       }
     }
  `
