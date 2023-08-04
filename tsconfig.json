@@ -18,9 +18,11 @@
       "resolveJsonModule": true,
       "isolatedModules": true,
       "noEmit": true,
-      "jsx": "react-jsx"
+      "jsx": "react-jsx",
+      "types": ["react-table", "node"]
     },
+    "references": [{ "path": "./node_modules/@types" }],
     "include": [
-      "src"
+      "src", "./react-table.d.ts"
 , "reportWebVitals.ts", "reportWebVitals.ts", "react-app-env.d.ts", "react-app-env.d.ts"    ]
   }

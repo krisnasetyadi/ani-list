@@ -1,0 +1,22 @@
+.css-h78qna .css-1qozmav {
+  @apply border-blue-400 my-0 
+}
+
+.css-kcf2wt .css-1i7c82o[aria-current=step] {
+  @apply bg-white 
+}
+.css-kcf2wt .css-1i7c82o[aria-current=step]:hover {
+  @apply border-blue-600
+}
+
+.css-455g1w .css-kcf2wt .css-1i7c82o:hover {
+    @apply border-blue-600
+}
+
+.css-455g1w .css-1qozmav {
+    @apply border-blue-400 my-0 
+}
+
+.css-gsp69p[aria-current=step] {
+  @apply z-10 
+}
