@@ -16,6 +16,9 @@ import { gql } from "@apollo/client"
             romaji
             }
             type
+            coverImage {
+              medium
+            }
           }
         }
     }

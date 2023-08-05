@@ -1,9 +1,10 @@
 export const COLORS = {
-  primary: '#FE4487',
-  primaryLight: '#FFE8F0',
+  primary: '#1f5dfb', //blue
+  primaryLight: '#5886fb', // light blue
+  primaryDisabled: '#82a4fb',
   secondary: '#612657',
   success: '#18BF29',
-  danger: '#E12344',
+  danger: '#F43F5E',
   dangerRed: '#ff0000',
   warning: '#ffb02c',
   orangeWarning: '#d25e0b',
@@ -13,7 +14,7 @@ export const COLORS = {
   white: '#fff',
   text: '#6A6A6A',
   title: '#000000',
-  label: '#8A8A8A',
+  label: '#4B5563',
   input: '#F9F9F9',
   borderColor: '#E3E3E3',
   backgroundColor: '#fff',
@@ -54,9 +55,8 @@ export const FONTS = {
   },
   font: {
     fontSize: SIZES.font,
-    color: COLORS.text,
-    lineHeight: 20,
-    fontFamily: 'OpenSans-Regular',
+    color: COLORS.title,
+    fontFamily: 'Roboto',
   },
   fontSm: {
     fontSize: SIZES.fontSm,
@@ -76,7 +76,7 @@ export const FONTS = {
   h5: { fontSize: SIZES.h5, color: COLORS.title, fontFamily: 'Poppins-SemiBold' },
   h6: { fontSize: SIZES.h6, color: COLORS.title, fontFamily: 'Poppins-SemiBold' },
   fontBold: { fontFamily: 'OpenSans-SemiBold' },
-  fontMedium: { fontFamily: 'OpenSans-Medium' },
+  fontMedium: { fontFamily: 'Roboto' },
   fontSatoshiLight: { fontFamily: 'Satoshi-Light' },
   fontSatoshiBold: { fontFamily: 'Satoshi-Bold' },
   fontSatoshiRegular: { fontFamily: 'Satoshi-Regular' },

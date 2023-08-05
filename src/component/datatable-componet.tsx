@@ -1,32 +1,24 @@
-import React, { useEffect, useState , ThHTMLAttributes  } from 'react';
-
-// import XLSX from 'xlsx';
+import React, { useEffect, useState } from 'react';
 import Moment from 'moment';
-import Swal from 'sweetalert2';
-// import { saveAs } from 'file-saver';
-import { Link } from 'react-router-dom';
-// import { useForm } from 'react-hook-form';
-// import { observer } from 'mobx-react-lite';
-import { Button, Skeleton, Stack, Fade } from '@chakra-ui/react';
+import { Link, useNavigate } from 'react-router-dom';
+import { Skeleton, Stack, Fade, Button } from '@chakra-ui/react';
 import { useTable, useRowSelect, usePagination, useSortBy, Column} from 'react-table';
 import { ChevronLeftIcon, ChevronRightIcon } from '@heroicons/react/solid';
 import { ArrowSmUpIcon, ArrowSmDownIcon } from '@heroicons/react/outline';
-// import Input from './input-component';
-// import Select from './select-component';
 import Checkbox from './checkbox-component';
-// import TableComponent from './table-component';
-// import DatePicker from './datepicker-component';
 import Toolbar from './action-toolbar-component';
 import LoadingHover from './loading-hover-component';
 import { calculateText, hasProperty } from '../utils/helper';
-import { useQuery } from '@apollo/client';
-import { jsx, css, Global, ClassNames } from '@emotion/react'
 import {
   ButtonNavTable, ButtonNavTable2, ButtonPage, HiddenSpan, 
   NavContainer, SpanBold, SpanText, Table, Td, Thead, 
-  Tr, Ul, TableContainer } from '../constant/component-styles/datatable-component-style';
-import { ButtonSm } from '../constant/component-styles/components';
+  Tr, Ul, TableContainer, ButtonIcon } from '../constant/component-styles/datatable-component-style';
+import { ButtonSm, ButtonDefault, ButtonAction } from '../constant/component-styles/components';
 import { VariablesProps } from '../screens/list-screen';
+import {
+  addIcon,
+} from '../assets/images/index';
+import { COLORS } from '../constant/theme';
 
 interface ActionProps {
   action: {
@@ -86,8 +78,7 @@ function DataTable(props: DatatableComponentProps) {
     setVariables
   } = props;
   
-console.log('dataaa', propsColumn.length)
-
+  const navigate = useNavigate()
   const [selectedRows, setSelectedRows] = useState<Record<string, boolean>>({});
   const [pages, setPages] = useState(1);
   const [lastPage, setLastPage] = useState(1);
@@ -111,22 +102,21 @@ console.log('dataaa', propsColumn.length)
     setLastPage(Math.ceil(total / 10));
   }, [total, limit]);
 
-  console.log('lastPage', lastPage)
   const data = React.useMemo(() => dataaa ? dataaa : [], [JSON.stringify(dataaa)]);
-  console.log('propsColumn', propsColumn)
   const columns = React.useMemo(
     () =>
       propsColumn.map(d => {
-        console.log('dddd', d)
         return {
           Header: d.header,
           accessor: d.value,
           width: d.width,
           Cell: (props : CellProps) => {
             const { value, row } = props;
-            console.log('propsss', props)
             if (d.type === 'date') {
               return Moment(value).format('DD MMM YYYY');
+            }
+            if(d.type === 'img') {
+              return <img src={value} />
             }
             if (d.type === 'link' && to) {
               const link:LinkProps  = {
@@ -219,6 +209,7 @@ console.log('dataaa', propsColumn.length)
     }
     return [force, exclude];
   };
+
   const checkPermissionAction = (action: string): string | undefined => {
     let act;
     switch (action) {
@@ -242,10 +233,10 @@ console.log('dataaa', propsColumn.length)
     }
     return act;
   };
+  
 
-  const enableAction = (action: string): string | boolean | undefined | void => {
+  const enableAction = (action: string): boolean | string | undefined => {
     const actions = {
-      add: 'add',
       view: 'view',
       edit: 'edit',
       delete: 'delete',
@@ -262,6 +253,7 @@ console.log('dataaa', propsColumn.length)
     }
     return false;
   };
+
   const renderToolbar = () => {
     if (toolbar) {
       return (
@@ -473,43 +465,43 @@ console.log('dataaa', propsColumn.length)
               </div>
               <div className="col-md-3 offset-md-9 px-0">
                 <div className="flex justify-end mt-3 px-4 py-3">
-                  <Button
-                    _hover={{
-                      shadow: 'md',
-                      transform: 'translateY(-5px)',
-                      transitionDuration: '0.2s',
-                      transitionTimingFunction: 'ease-in-out',
-                    }}
+                  <ButtonDefault
+                    // _hover={{
+                    //   shadow: 'md',
+                    //   transform: 'translateY(-5px)',
+                    //   transitionDuration: '0.2s',
+                    //   transitionTimingFunction: 'ease-in-out',
+                    // }}
                     type="button"
-                    size="sm"
-                    px={8}
+                    // size="sm"
+                    // px={8}
                     className="rounded-full border border-primarydeepo bg-[#fff] hover:bg-[#E4E4E4] text-[#184D47] font-bold"
                     onClick={() => onReset()}
                   >
                     Reset
-                  </Button>
-                  <Button
-                    _hover={{
-                      shadow: 'md',
-                      transform: 'translateY(-5px)',
-                      transitionDuration: '0.2s',
-                      transitionTimingFunction: 'ease-in-out',
-                    }}
+                  </ButtonDefault>
+                  <ButtonDefault
+                    // _hover={{
+                    //   shadow: 'md',
+                    //   transform: 'translateY(-5px)',
+                    //   transitionDuration: '0.2s',
+                    //   transitionTimingFunction: 'ease-in-out',
+                    // }}
                     type="submit"
-                    size="sm"
-                    px={8}
+                    // size="sm"
+                    // px={8}
                     className="ml-4 rounded-full bg-primarydeepo drop-shadow-md text-[#fff] hover:text-[#E4E4E4] font-bold"
                     onClick={(onSubmit)}
                   >
                     Filter
-                  </Button>
+                  </ButtonDefault>
                 </div>
               </div>
             </form>
           </div>
         </div>
       )}
-      {renderToolbar() && filter.length !== 0 && (
+      {renderToolbar() && (
         <Toolbar
           selectedData={selectedFlatRows}
           defaultShow={propsColumn}
@@ -518,7 +510,6 @@ console.log('dataaa', propsColumn.length)
           navTo={{ path: to, id: (selectedFlatRows?.find(i => i)?.original as { id: string })?.id }}
           displayName={displayName}
           name={name}
-          // onAdd={enableAction('add')}
           // onEdit={enableAction('edit')}
           // copyItem={allColumns.filter(i => i.id !== 'selection' && i.isVisible === true)}
           // copyClipboard={enableAction('copy-to-clipboard')}
@@ -545,7 +536,7 @@ console.log('dataaa', propsColumn.length)
                       {headerGroup.headers.map((column, columnidx) => (
                         <th
                           {...column.getHeaderProps()}
-                          className={`${column.id === 'selection' ? 'px-6 w-20' : 'px-3'} py-3`}
+                          style={{ ...(column.id === 'selection' ? {paddingRight: '3px', paddingLeft: '3px', width: '20px'} : {paddingRight: '2px', paddingLeft: '2px', width: `${100/(columns.length + 1)}%`} )}}
                           // width={column.width === 'auto' ? autoWidth : ''}
                         >
                           <div
@@ -571,7 +562,11 @@ console.log('dataaa', propsColumn.length)
                             </div>
                           </div>
                         </th>
-                      ))}
+                      ))
+                      }
+                      <th style={{ textAlign: 'center' }}>
+                        Action
+                      </th>
                     </tr>
                   ))}
                 </Thead>
@@ -592,6 +587,19 @@ console.log('dataaa', propsColumn.length)
                               {cell.render('Cell')}
                             </Td>
                           ))}
+                          <Td>
+                           <ButtonAction
+                            type="button"
+                            onClick={() => navigate(`/${to}/${row.id}/add`)}
+                           >
+                            <div style={{ display: 'flex' }}>
+                              Add
+                              <div className="hover:text-red-200 h-4 w-4 mr-2">
+                                <img src={addIcon} alt="add icon" style={{ height: '10px', marginLeft: '5px' }} />
+                              </div>
+                            </div>
+                           </ButtonAction>
+                          </Td>
                         </Tr>
                       );
                     })}
@@ -712,15 +720,18 @@ console.log('dataaa', propsColumn.length)
                 </>
               )}
               <li>
-                <ButtonPage
+                <ButtonSm
                   type="button"
                   disabled={pages === lastPage}
                   onClick={() => (pages === lastPage ? {} : changePage(pages + 1))}
-                  className="block py-2 px-3 leading-tight text-gray-500 bg-white disabled:text-gray-300 disabled:hover:bg-white hover:bg-gray-100 hover:text-gray-700"
+                  style={{ display: 'block',
+                  padding: '8px 12px',
+                  color: '#718096',
+                  backgroundColor: COLORS.white}}
                 >
                   <HiddenSpan>Next</HiddenSpan>
                   {totalData <= 0 ? null : <ChevronRightIcon style={{width: '5px', height: '5px'}} />}
-                </ButtonPage>
+                </ButtonSm>
               </li>
             </Ul>
           </NavContainer>

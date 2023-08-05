@@ -19,32 +19,53 @@ export const ButtonSm = styled.button`
     }
   }
   &:hover{
-    background-color: #F7FAFC;
+    background-color: ;
     color: #4A5568; 
   }
 `;
 
-export const Button = styled.button`
+export const ButtonDefault = styled.button`
   width: 5%;
   height: 2%;
   padding-right: 5px;
   padding-left: 5px;
   padding-top: 2px;
   padding-bottom: 2px;
-  background-color: #1f5dfb;
+  background-color: ${COLORS.primary};
   border-color: #eef5ff;
   border-radius: ${SIZES.radius_sm}px;
   ${FONTS.fontSm}
   &:disabled {
     color: #A0AEC0;
     &:hover {
-      background-color: ${COLORS.white};
+      background-color: ${COLORS.primaryDisabled};
     }
   }
   &:hover{
-    background-color: #F7FAFC;
-    color: #4A5568; 
+    background-color: ${COLORS.primaryLight};
   }
+`;
+
+export const ButtonAction = styled.button`
+  width: 30%;
+  height: 2%;
+  padding-right: 5px;
+  padding-left: 5px;
+  padding-top: 2px;
+  padding-bottom: 2px;
+  background-color: ${COLORS.primary};
+  border-color: #eef5ff;
+  border-radius: ${SIZES.radius_sm}px;
+  ${FONTS.fontSm}
+  &:disabled {
+    color: #A0AEC0;
+    &:hover {
+      background-color: ${COLORS.primaryDisabled};
+    }
+  }
+  &:hover{
+    background-color: ${COLORS.primaryLight};
+}
 `;
 
 export const H1Bold = styled.h1`

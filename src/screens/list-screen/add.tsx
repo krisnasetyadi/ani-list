@@ -1,34 +1,33 @@
-import { useEffect, useState } from 'react'
-import { useLocation, useNavigate, useParams } from 'react-router-dom'
+import React, { useState } from 'react'
+import { useNavigate, useParams } from 'react-router-dom'
 import { GET_DATA_BY_ID } from '../../graphql/queries'
 import { useQuery } from '@apollo/client';
-import InputSummaryDetailComponent from '../../component/input-summary-detail-component';
 import { ButtonDefault, DivContainer, DivwithGrid, H1Bold, Tag, Title } from '../../constant/component-styles/components';
 import LoadingHoverComponent from '../../component/loading-hover-component';
 import { StyledChevronLeftIcon } from '../../constant/component-styles/icon-components';
 import { COLORS } from '../../constant/theme';
 import { SpanBold } from '../../constant/component-styles/datatable-component-style';
+import InputComponent from '../../component/input-component';
 
-function ShowScreen(props: any) {
-    const { displayName } = props
+function AddScreen(props: any) {
     const { id } = useParams()
-    const location = useLocation()
+    const { displayName } = props
     const navigate = useNavigate()
     const [queryData, setQueryData] = useState<any>({})
+    const [errors, setErrors] = useState({})
 
-    const { loading, error, data } = useQuery(GET_DATA_BY_ID, {
-      variables: {
-        id: id,
-        // type: state?.anime_type,
-      } 
-    });
+    const {loading, error, data} = useQuery(GET_DATA_BY_ID, {
+        variables: {
+            id: id
+        }
+    })
 
-    useEffect(() => {
-      setQueryData(data?.Media)
-    },[data])
+    const handleSubmit = (e: any) => {
+        e.preventDefault()
+    } 
 
     return (
-      <div>
+      <form onSubmit={handleSubmit}>
         <div style={{ display: 'flex', marginBottom: '6px', alignItems: 'center', borderBottom: `0.5px solid ${COLORS.light}` }}>
           <StyledChevronLeftIcon 
             onClick={() => navigate(-1)} 
@@ -37,22 +36,12 @@ function ShowScreen(props: any) {
           <div style={{ flex: 1 }} />
           {/* will be delete button in this section*/}
           <ButtonDefault
-            onClick={() => navigate(`/master/category/${id}/edit`)}
             type="submit"
           >
-            Edit
+            Add
           </ButtonDefault>
         </div>
-        <div style={{ display: 'flex', justifyContent: 'center'}}>
-          <img src={queryData?.bannerImage} style={{
-            width: '90%',
-            height: '30%',
-            borderRadius: '10px',
-            marginBottom: '20px'
-          }} />
-        </div>
-   
-        {loading && <LoadingHoverComponent />}
+        {/* {loading && <LoadingHoverComponent />} */}
         <div style={{ display: 'flex', justifyContent: 'space-between', paddingRight: '20px'}}>
           <div>
             {!queryData?.title?.english.includes(queryData?.title?.native) && (
@@ -65,29 +54,15 @@ function ShowScreen(props: any) {
             <Tag color={COLORS.success}>{queryData?.status}</Tag>
           </div>
         </div>
-      
+        
         <DivContainer>
           <DivwithGrid>
-            <InputSummaryDetailComponent
-              label="Episodes"
-              value={queryData?.episodes}
-            />
-            <InputSummaryDetailComponent
-              label="Genres"
-              value={queryData?.genres?.join(', ')}
-            />
-            <InputSummaryDetailComponent
-              label="Duration"
-              value={`${queryData?.duration} minutes`}
-            />
-            <InputSummaryDetailComponent
-              label="Description"
-              value={queryData?.description}
-            />
+            <InputComponent name='name' label='Label' errors={errors} />
           </DivwithGrid>
         </DivContainer>
-    </div>
+        
+    </form>
     )
 }
 
-export default ShowScreen
+export default AddScreen

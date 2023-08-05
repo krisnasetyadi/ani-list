@@ -38,3 +38,49 @@ export function toCalculate(data, type) {
   return total;
 }
 
+export const rewriteString = (text: string): string => {
+    if (text) {
+      const splitted = text.trim().split(' ');
+  
+      const masked = splitted.map(s => {
+        let string = ''
+        let mask = ''
+        if (s.length > 2) {
+          string = s.substring(0, 2);
+          mask = s.substring(2, s.length).replace(/\w/g, '*');
+        }
+        if (s.length <= 2) {
+          if (s.length === 1) {
+            return s;
+          }
+          string = s.substring(0, 1);
+          mask = s.substring(1, s.length).replace(/\w/g, '*');
+        }
+        return string + mask;
+      });
+      return masked.join(' ');
+    }
+    return '';
+}
+
+export const cardNumberFormat = (cardNumber: string | number, eachLength: number): string => {
+    if(cardNumber && eachLength) {
+  const digitsOnly = String(cardNumber).replace(/\D/g, '');
+  const pattern = new RegExp(`.{1,${eachLength}}`, 'g');
+  const groups = digitsOnly.match(pattern) || [];
+  return groups.join('-');
+  }
+ return ''
+}
+
+export const thousandSeperator = (number: string | number): string => {
+    const options = {
+        useGrouping: true,
+        minimumFractionDigits: 2,
+        maximumFractionDigits: 2
+      };
+      const formattedNum = number.toLocaleString('en-US', options);
+      
+      return formattedNum
+}
+

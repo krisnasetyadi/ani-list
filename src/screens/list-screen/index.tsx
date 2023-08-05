@@ -25,7 +25,6 @@ interface RouteProps {
 
 function IndexScreen (props: RouteProps) {
     const {displayName, route} = props
-    console.log('propsIndexScreen', props)
     const [variables, setVariables] = useState<VariablesProps>({
         page: 1,
         perPage: 10,
@@ -34,7 +33,6 @@ function IndexScreen (props: RouteProps) {
         offset: 0
     })
 
-    console.log('variables', variables)
     const [data, setData] = useState({
         data: [],
         total: 0
@@ -43,14 +41,12 @@ function IndexScreen (props: RouteProps) {
         ...variables,
         sort: [{ [variables.sort_by!]: variables.sort_order}]
     },})
-
-
-    console.log('queryData', queryData, error)
    
     useEffect(() => {
         setData({
             data: queryData?.Page?.media?.map((item: any) => {
             return {
+                image: item.coverImage?.medium,
                 id: item.id,
                 title: item.title.romaji,
                 type: item.type
@@ -59,8 +55,7 @@ function IndexScreen (props: RouteProps) {
         total: queryData?.Page?.pageInfo.total || 0
     })
     }, [queryData])
-    console.log('route', route.split('/')  )
-    
+
     return (
         <>
         <DataTable 
@@ -68,8 +63,13 @@ function IndexScreen (props: RouteProps) {
           total={data.total}
           to={route.split('/')[1]}
           setVariables={setVariables}
+          toolbar={{
+            action: {
+                add: true
+            }
+          }}
           columns={[
-            { header: 'Id', value: 'id', copy: true },
+            { header: '', value: 'image', copy: true, type: 'img', width: 500 },
             { header: 'TITLE', value: 'title', copy: true, type: 'link' },
             { header: 'TYPE', value: 'type', copy: true },
             ]}

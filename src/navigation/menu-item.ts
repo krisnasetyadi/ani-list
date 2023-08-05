@@ -2,8 +2,9 @@ import { lazy } from 'react'
 import { RouteProps } from './main-navigation';
 
 const Home = lazy(() => import('../screens/home-screen'));
-const ListScreen = lazy(() => import('../screens/list-screen/index'))
-const ListScreenShow = lazy(() => import('../screens/list-screen/show'));
+const AnimeListScreen = lazy(() => import('../screens/list-screen/index'));
+const AnimeAddScreen = lazy(() => import('../screens/list-screen/add'))
+const AnimeShowScreen = lazy(() => import('../screens/list-screen/show'));
 
 export const MenuItem: RouteProps[] = [
     {
@@ -20,15 +21,23 @@ export const MenuItem: RouteProps[] = [
                 showmenu: false,
                 exact: true,
                 route: '/list',
-                component: ListScreen,
+                component: AnimeListScreen,
                 routes: [
                     {
-                        displayName: 'Details',
+                        displayName: 'Add Collection',
+                        name: 'add-collection',
+                        showmenu: false,
+                        exact: true,
+                        route: '/list/:id/add',
+                        component: AnimeAddScreen
+                    },
+                    {
+                        displayName: 'Anime Details',
                         name: 'list-detail',
                         showmenu: false,
                         exact: true,
                         route: '/list/:id/show',
-                        component: ListScreenShow
+                        component: AnimeShowScreen
                     }
                 ]
             }

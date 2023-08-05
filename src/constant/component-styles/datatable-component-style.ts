@@ -33,12 +33,13 @@ export const Tr = styled.tr`
   &:hover {
     background-color: #F3F4F6;
   }
-`
+` 
 export const Td = styled.td`
   padding-top: 1px;
   padding-bottom: 1px;
-  padding-right: ${(({isSelection}: {isSelection: boolean}) =>(isSelection ? '3px' : '1.5px') )}
-  padding-left: ${(({isSelection}: {isSelection: boolean}) =>(isSelection ? '3px' : '1.5px') )}
+  text-align: center;
+  padding-right: ${(({isSelection}: {isSelection?: boolean}) =>(isSelection ? '3px' : '1.5px') )};
+  padding-left: ${(({isSelection}: {isSelection?: boolean}) =>(isSelection ? '3px' : '1.5px') )};
 `
 export const NavContainer = styled.nav`
   display: flex;
@@ -142,5 +143,22 @@ export const ButtonPage = styled.button`
   &:hover {
    background-color: #4a4a4a;
    color: ${COLORS.white}; 
+  }
+`
+
+export const ButtonIcon = styled.button`
+  display: block;
+  padding: 8px 12px;
+  color: #718096;
+  background-color: ${COLORS.white};
+  &.disabled {
+    color: #a0aec0;
+    &:hover {
+      background-color: ${COLORS.white};
+    }
+  }
+  &:hover {
+    background-color: #edf2f7;
+    color: #4a5568;
   }
 `
