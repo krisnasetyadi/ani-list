@@ -45,17 +45,32 @@ function ShowScreen(props: any) {
         </div>
         <div style={{ display: 'flex', justifyContent: 'center'}}>
           <img src={queryData?.bannerImage} style={{
-            width: '90%',
+            width: '100%',
             height: '30%',
             borderRadius: '10px',
             marginBottom: '20px'
           }} />
+          <div style={{ display: 'flex'  }}>
+           <img 
+             src={queryData?.coverImage?.medium} 
+             style={{ 
+               height: '50%', 
+               width: '20%', 
+               position: 'absolute', 
+               left: 0, 
+               top: '20%',
+               marginLeft: 30, 
+               borderRadius: 10
+              }} 
+            />
+          </div>
         </div>
    
         {loading && <LoadingHoverComponent />}
         <div style={{ display: 'flex', justifyContent: 'space-between', paddingRight: '20px'}}>
-          <div>
-            {!queryData?.title?.english.includes(queryData?.title?.native) && (
+         
+          <div style={{paddingLeft: '22%'}}>
+            {!queryData?.title?.english?.includes(queryData?.title?.native) && (
             <Title>{queryData?.title?.native}</Title>
              )}
             <Title>{queryData?.title?.english}</Title>
