@@ -224,3 +224,10 @@ export const ChevronNavLeft = styled(ChevronLeftIcon)`
     background-color: ${COLORS.primaryLight};
   }
 `
+export const TdNoContent = styled.td`
+  background-color: ${COLORS.white};
+  height: 50px;
+  text-align: center;
+  margin-bottom: 5px;
+  border-radius: 10px;
+`

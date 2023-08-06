@@ -12,7 +12,7 @@ import { calculateText, hasProperty } from '../utils/helper';
 import {
   ButtonNavTable, ButtonNavTable2, ButtonPage, HiddenSpan, 
   NavContainer, SpanBold, SpanText, Table, Td, Thead, 
-  Tr, Ul, TableContainer, ButtonIcon, SpanTag, TdLink, ChevronNavRight, ChevronNavLeft } from '../constant/component-styles/datatable-component-style';
+  Tr, Ul, TableContainer, ButtonIcon, SpanTag, TdLink, ChevronNavRight, ChevronNavLeft, TdNoContent } from '../constant/component-styles/datatable-component-style';
 import { ButtonSm, ButtonDefault, ButtonAction } from '../constant/component-styles/components';
 import { VariablesProps } from '../screens/list-screen';
 import {
@@ -656,7 +656,7 @@ function DataTable(props: DatatableComponentProps) {
                 ): (
                   <tbody>
                      <tr>
-                      <td colSpan={checkbox ? columns.length + 1 : columns.length} style={{ textAlign: 'center' }}>no content available</td>
+                      <TdNoContent colSpan={checkbox ? columns.length + 1 : columns.length}>no content available</TdNoContent>
                     </tr>
                   </tbody>
                 ) }
