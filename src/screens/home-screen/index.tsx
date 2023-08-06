@@ -9,9 +9,10 @@ export default function () {
               style={{ 
                 backgroundColor: COLORS.primary, color: COLORS.white, textDecoration: 'none', fontFamily: 'Roboto',
                 padding: '10px', borderRadius: '5px'}}
-                href={`https://anilist.co/api/v2/oauth/authorize?client_id=${process.env.REACT_APP_CLIENT_ID}&redirect_uri=${process.env.REACT_APP_REDIRECT_URL || 'http://localhost:3000'}&response_type=code`}>
+                href={`https://anilist.co/api/v2/oauth/authorize?client_id=${process.env.REACT_APP_CLIENT_ID}&redirect_uri=${process.env.REACT_APP_REDIRECT_URL}&response_type=code`}>
                 Login
             </a>
+            <a style={{marginTop: '50px'}} href="https://github.com/krisnasetyadi/ani-list">SOURCE CODE</a>
         </div>
     )
 }
