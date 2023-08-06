@@ -47,12 +47,12 @@ export const ButtonDefault = styled.button`
 `;
 
 export const ButtonAction = styled.button`
-  width: 30%;
+  width: 50%;
   height: 2%;
-  padding-right: 5px;
-  padding-left: 5px;
-  padding-top: 2px;
-  padding-bottom: 2px;
+  padding-right: 7px;
+  padding-left: 7px;
+  padding-top: 4px;
+  padding-bottom: 4px;
   background-color: ${COLORS.primary};
   border-color: #eef5ff;
   border-radius: ${SIZES.radius_sm}px;

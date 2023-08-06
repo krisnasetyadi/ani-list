@@ -12,7 +12,7 @@ import { calculateText, hasProperty } from '../utils/helper';
 import {
   ButtonNavTable, ButtonNavTable2, ButtonPage, HiddenSpan, 
   NavContainer, SpanBold, SpanText, Table, Td, Thead, 
-  Tr, Ul, TableContainer, ButtonIcon } from '../constant/component-styles/datatable-component-style';
+  Tr, Ul, TableContainer, ButtonIcon, SpanTag, TdLink, ChevronNavRight, ChevronNavLeft } from '../constant/component-styles/datatable-component-style';
 import { ButtonSm, ButtonDefault, ButtonAction } from '../constant/component-styles/components';
 import { VariablesProps } from '../screens/list-screen';
 import {
@@ -45,6 +45,7 @@ interface DatatableComponentProps {
   query?: any | any[];
   dataaa: any | any[];
   total: number;
+  withoutHeader: boolean;
   setVariables: React.Dispatch<React.SetStateAction<VariablesProps>>
 }
 
@@ -75,6 +76,7 @@ function DataTable(props: DatatableComponentProps) {
     query,
     dataaa,
     total,
+    withoutHeader,
     setVariables
   } = props;
   
@@ -112,27 +114,42 @@ function DataTable(props: DatatableComponentProps) {
           width: d.width,
           Cell: (props : CellProps) => {
             const { value, row } = props;
+            console.log('props', props)
             if (d.type === 'date') {
               return Moment(value).format('DD MMM YYYY');
             }
             if(d.type === 'img') {
-              return <img src={value} />
-            }
-            if (d.type === 'link' && to) {
               const link:LinkProps  = {
                 pathname: `/${to}/${row.original[identifierProperties]}/show`,
                 state: {
                   anime_type: 'Your anime type',
                 },
               };
+              return  (
+              <Link
+                type="button"
+                style={{color: COLORS.label, fontFamily: 'Roboto', textDecoration: 'none'}}
+                to={link}
+              >
+                <img src={value} />
+              </Link>
+              ) 
+            }
+            if (d.type === 'link' && to) {
+              const link:LinkProps  = {
+                pathname: `/${to}/${row.original[identifierProperties]}/show`,
+                state: {
+                  anime_type: 'anime type',
+                },
+              };
               return (
-                <Link
-                  type="button"
-                  style={{color: 'blue'}}
-                  to={link}
-                >
-                  {value}
-                </Link>
+                  <Link
+                    type="button"
+                    style={{color: COLORS.label, fontFamily: 'Roboto', textDecoration: 'none'}}
+                    to={link}
+                  >
+                    {value}
+                  </Link>
               );
             }
             if (d.width === 'auto') {
@@ -141,9 +158,38 @@ function DataTable(props: DatatableComponentProps) {
               return calculateText(value)[1];
             }
             if (d.type === 'multi-value') {
-              return <td>{`${value} - ${row.original[d.obj][d.secondValue]}`}</td>;
+              return (
+                  <div>
+                    <SpanBold>{value}</SpanBold>
+                    <div style={{ marginTop: '10px' }}>{value.toLowerCase().includes('movie') ? `${row.original[d.obj2]} minutes` : `${row.original[d.obj]} episodes`}</div>
+                  </div>
+              );
             }
-
+            if (d.type === 'multi-value-link' && to) {
+              const link:LinkProps  = {
+                pathname: `/${to}/${row.original[identifierProperties]}/show`,
+                state: {
+                  anime_type: 'anime type',
+                },
+              };
+              return (
+              <div>
+                  <TdLink
+                    type="button"
+                    to={link}
+                  >
+                    {value}
+                  </TdLink>
+                  <div style={{ display: 'flex', justifyContent: 'center' }}>
+                    {Array.isArray(row.original[d.obj]) && row.original[d.obj].map((item: string) => {
+                      return (
+                        <SpanTag>{item}</SpanTag>
+                      )
+                    }) }
+                  </div>
+              </div>
+              )
+            }
             return value;
           },
         };
@@ -529,47 +575,50 @@ function DataTable(props: DatatableComponentProps) {
           >
             <div className="scrollbar-x-auto">
               <Table {...getTableProps()}>
-                <Thead>
-                {/* key={idxgroup} */}
-                  {headerGroups.map((headerGroup, idxgroup) => (
-                    <tr  {...headerGroup.getHeaderGroupProps()}>
-                      {headerGroup.headers.map((column, columnidx) => (
-                        <th
-                          {...column.getHeaderProps()}
-                          style={{ ...(column.id === 'selection' ? {paddingRight: '3px', paddingLeft: '3px', width: '20px'} : {paddingRight: '2px', paddingLeft: '2px', width: `${100/(columns.length + 1)}%`} )}}
-                          // width={column.width === 'auto' ? autoWidth : ''}
-                        >
-                          <div
-                            // className="flex"
-                            onClick={() => {
-                              if (column.id !== 'selection') {
-                                setIsSort(true);
-                                onSortChange(column);
-                              }
-                            }}
+                {!withoutHeader &&
+                  <Thead>
+                  {/* key={idxgroup} */}
+                    {headerGroups.map((headerGroup, idxgroup) => (
+                      <tr  {...headerGroup.getHeaderGroupProps()}>
+                        {headerGroup.headers.map((column, columnidx) => (
+                          <th
+                            {...column.getHeaderProps()}
+                            style={{ ...(column.id === 'selection' ? {paddingRight: '3px', paddingLeft: '3px', width: '20px'} : {paddingRight: '2px', paddingLeft: '2px', width: `${100/(columns.length + 1)}%`} )}}
+                            // width={column.width === 'auto' ? autoWidth : ''}
                           >
-                            <div style={column.id !== 'selection' ? {textAlign: 'center'} : {}}>{column.render('Header')}</div>
-                            <div style={{margin: 'auto'}}>
-                              {isSort && column.id === columnId && column.id !== 'selection' ? (
-                                onChangeHeader() === 'desc' && isDesc ? (
-                                  <ArrowSmUpIcon className="ml-2 h-4 stroke-[#eb6058]" />
+                            <div
+                              // className="flex"
+                              onClick={() => {
+                                if (column.id !== 'selection') {
+                                  setIsSort(true);
+                                  onSortChange(column);
+                                }
+                              }}
+                            >
+                              <div style={column.id !== 'selection' ? {textAlign: 'center'} : {}}>{column.render('Header')}</div>
+                              <div style={{margin: 'auto'}}>
+                                {isSort && column.id === columnId && column.id !== 'selection' ? (
+                                  onChangeHeader() === 'desc' && isDesc ? (
+                                    <ArrowSmUpIcon className="ml-2 h-4 stroke-[#eb6058]" />
+                                  ) : (
+                                    <ArrowSmDownIcon className="ml-2 h-4 stroke-[#eb6058]" />
+                                  )
                                 ) : (
-                                  <ArrowSmDownIcon className="ml-2 h-4 stroke-[#eb6058]" />
-                                )
-                              ) : (
-                                ''
-                              )}
+                                  ''
+                                )}
+                              </div>
                             </div>
-                          </div>
+                          </th>
+                        ))
+                        }
+                        <th style={{ textAlign: 'center' }}>
+                          Action
                         </th>
-                      ))
-                      }
-                      <th style={{ textAlign: 'center' }}>
-                        Action
-                      </th>
-                    </tr>
-                  ))}
-                </Thead>
+                      </tr>
+                    ))}
+                  </Thead>
+                }
+                
 
                 {data.length > 0 ? (
                   <tbody {...getTableBodyProps()}>
@@ -577,7 +626,7 @@ function DataTable(props: DatatableComponentProps) {
                       prepareRow(row);
                       return (
                         <Tr
-                          isEven={ i % 2 === 0}
+                          isEven={i % 2 === 0}
                           {...row.getRowProps()}>
                           {row.cells.map((cell, idx) => (
                             <Td
@@ -594,7 +643,7 @@ function DataTable(props: DatatableComponentProps) {
                            >
                             <div style={{ display: 'flex' }}>
                               Add
-                              <div className="hover:text-red-200 h-4 w-4 mr-2">
+                              <div>
                                 <img src={addIcon} alt="add icon" style={{ height: '10px', marginLeft: '5px' }} />
                               </div>
                             </div>
@@ -650,14 +699,9 @@ function DataTable(props: DatatableComponentProps) {
             </SpanText>
             <Ul>
               <li>
-                <ButtonSm
-                  type="button"
-                  disabled={pages === 1}
-                  onClick={() => (pages === 1 ? {} : changePage(pages - 1))}
-                >
-                  <HiddenSpan>Previous</HiddenSpan>
-                  <ChevronLeftIcon style={{width: '5px', height: '5px'}}/>
-                </ButtonSm>
+                <div onClick={() => (pages === lastPage ? {} : changePage(pages + 1))}>
+                  {totalData <= 0 ? null : <ChevronNavLeft isLastPage={pages === lastPage} /> }             
+                </div>
               </li>
               {lastPage > 7 && pages >= 4 && (
                 <>
@@ -669,13 +713,13 @@ function DataTable(props: DatatableComponentProps) {
                       1
                     </ButtonNavTable>
                   </li>
-                  <li>
+                  {/* <li>
                     <ButtonNavTable
                       type="button"
                     >
                       ...
                     </ButtonNavTable>
-                  </li>
+                  </li> */}
                 </>
               )}
               {Array(
@@ -703,35 +747,25 @@ function DataTable(props: DatatableComponentProps) {
                   <li>
                     <ButtonPage
                       type="button"
-                      className="py-2 px-3 mr-1 ml-0.5 leading-tight text-black rounded-lg bg-gray-100 hover:bg-gray-700 hover:text-white"
-                    >
-                      ...
-                    </ButtonPage>
-                  </li>
-                  <li>
-                    <ButtonPage
-                      type="button"
                       onClick={() => changePage(lastPage)}
-                      className="py-2 px-3 leading-tight text-black rounded-lg bg-gray-100 hover:bg-gray-700 hover:text-white"
                     >
                       {lastPage}
                     </ButtonPage>
+                
                   </li>
+                  {/* <li>
+                    <ButtonPage
+                      type="button"
+                    >
+                      ...
+                    </ButtonPage>
+                  </li> */}
                 </>
               )}
               <li>
-                <ButtonSm
-                  type="button"
-                  disabled={pages === lastPage}
-                  onClick={() => (pages === lastPage ? {} : changePage(pages + 1))}
-                  style={{ display: 'block',
-                  padding: '8px 12px',
-                  color: '#718096',
-                  backgroundColor: COLORS.white}}
-                >
-                  <HiddenSpan>Next</HiddenSpan>
-                  {totalData <= 0 ? null : <ChevronRightIcon style={{width: '5px', height: '5px'}} />}
-                </ButtonSm>
+                <div onClick={() => (pages === lastPage ? {} : changePage(pages + 1))}>
+                  {totalData <= 0 ? null : <ChevronNavRight isLastPage={pages === lastPage} /> }             
+                </div>
               </li>
             </Ul>
           </NavContainer>

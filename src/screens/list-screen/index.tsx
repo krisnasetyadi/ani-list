@@ -49,7 +49,11 @@ function IndexScreen (props: RouteProps) {
                 image: item.coverImage?.medium,
                 id: item.id,
                 title: item.title.romaji,
-                type: item.type
+                type: item.type,
+                format: item.format,
+                episodes: item.episodes,
+                duration: item.duration,
+                genres: item.genres,
             }
         }),
         total: queryData?.Page?.pageInfo.total || 0
@@ -63,6 +67,7 @@ function IndexScreen (props: RouteProps) {
           total={data.total}
           to={route.split('/')[1]}
           setVariables={setVariables}
+          withoutHeader
           toolbar={{
             action: {
                 add: true
@@ -70,10 +75,22 @@ function IndexScreen (props: RouteProps) {
           }}
           columns={[
             { header: '', value: 'image', copy: true, type: 'img', width: 500 },
-            { header: 'TITLE', value: 'title', copy: true, type: 'link' },
-            { header: 'TYPE', value: 'type', copy: true },
+            { header: '', 
+              value: 'title', 
+              copy: true, 
+              type: 'multi-value-link', 
+              secondValue: 'genres',
+              obj: 'genres'},
+            { 
+              header: '', 
+              value: 'format', 
+              copy: true, 
+              type: 'multi-value',
+              obj: 'episodes',
+              obj2: 'duration'
+             },
             ]}
-          checkbox
+        //   checkbox
         />
         </>
     )

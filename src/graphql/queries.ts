@@ -15,6 +15,10 @@ import { gql } from "@apollo/client"
             title {
             romaji
             }
+            genres
+            format
+            episodes
+            duration
             type
             coverImage {
               medium

@@ -1,12 +1,14 @@
 import styled from '@emotion/styled'
 import { COLORS, FONTS, SIZES } from '../theme';
+import { Link } from 'react-router-dom';
+import { ChevronLeftIcon, ChevronRightIcon } from '@heroicons/react/solid';
 
 export const TableContainer = styled.div`
   overflow-x: hidden;
   position: relative;
   padding-left: 24px; 
   padding-bottom: 44px;
-  background-color: #FFFFFF; 
+  background-color: #e2e9f1; 
   box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25); 
   border-bottom-left-radius: 48px;
 `
@@ -18,6 +20,7 @@ export const Table = styled.table`
   border: 1px solid #d1d5db; 
   color: #6b7280;
   border-top-width: 1px;
+  border-collapse: collapse;
 `;
 
 export const Thead = styled.thead`
@@ -27,11 +30,15 @@ export const Thead = styled.thead`
   text-transform: uppercase;
   background-color: ${COLORS.light};
 `
+
 export const Tr = styled.tr`    
-  background-color: ${({isEven}:{isEven: boolean}) => (isEven ? '#FFFFFF' : '#F9FAFB')}
+  background-color: ${({isEven}:{isEven: boolean}) => (isEven ? COLORS.white : '#dae4f1')};
   border: 1px solid #E5E7EB; 
   &:hover {
     background-color: #F3F4F6;
+  }
+  &:not(:last-child) {
+    margin-bottom: 10px;
   }
 ` 
 export const Td = styled.td`
@@ -53,13 +60,15 @@ export const SpanText = styled.td`
   background-color: 'green'
   width: '500px'
   font-size: 0.875rem;
+  font-family: Roboto;
   font-weight: 400;
   color: ${COLORS.mediumGray};
 `
 
 export const SpanBold = styled.span`
   font-weight: 600;
-  color: ${COLORS.mediumGray}
+  font-family: Roboto;
+  color: ${COLORS.mediumGray};
 `
 export const Ul = styled.ul`
   display: inline-flex;
@@ -110,18 +119,18 @@ export const ButtonNavTable2 = styled.button`
   transition: background-color 0.3s, color 0.3s;
 
   &:hover {
-    background-color: #184d47;
+    background-color: ${COLORS.primaryLight};
     color: ${COLORS.white};
   }
 
   &:disabled {
-    background-color: #f3f3f3;
+    background-color: ${COLORS.primaryDisabled};
     color: ${COLORS.white};
     cursor: not-allowed;
  }
 
   &[disabled]:hover {
-    background-color: #f3f3f3;
+    background-color: ${COLORS.primaryDisabled};
     color:  ${COLORS.white};
   }
 
@@ -141,7 +150,7 @@ export const ButtonPage = styled.button`
   transition: background-color 0.3s, color 0.3s;
 
   &:hover {
-   background-color: #4a4a4a;
+   background-color: ${COLORS.primaryLight};
    color: ${COLORS.white}; 
   }
 `
@@ -160,5 +169,58 @@ export const ButtonIcon = styled.button`
   &:hover {
     background-color: #edf2f7;
     color: #4a5568;
+  }
+`
+export const SpanTag = styled.span`
+  margin-top: 10px;
+  background-color: #3480ea;
+  border-radius: 10px;
+  margin-right: 10px;
+  color: ${COLORS.white};
+  padding-right: 5px;
+  padding-left: 5px;
+  padding-top: 2px;
+  padding-bottom: 2px;
+  text-transform: lowercase;
+`
+export const TdLink = styled(Link)`
+  color: ${COLORS.title};
+  font-family: 'Roboto';
+  font-weight: 600;
+  text-decoration: none;
+  &:hover {
+    color: ${COLORS.mediumGray};
+  }
+`
+
+export const ChevronNavRight = styled(ChevronRightIcon)`
+  widht: 30px;
+  margin-left: 5px;
+  margin-right: 5px;
+  height: 30px;
+  border: 1px solid ${COLORS.title};
+  border-radius: 10px;
+  color: ${COLORS.title};
+  background-color:${({isLastPage}: {isLastPage: boolean}) => (isLastPage ? `${COLORS.primaryDisabled}` : COLORS.white)};
+
+  &:hover {
+    cursor: pointer;
+    background-color: ${COLORS.primaryLight};
+  }
+`
+
+export const ChevronNavLeft = styled(ChevronLeftIcon)`
+  widht: 30px;
+  margin-left: 5px;
+  margin-right: 5px;
+  height: 30px;
+  border: 1px solid ${COLORS.title};
+  border-radius: 10px;
+  color: ${COLORS.title};
+  background-color:${({isLastPage}: {isLastPage: boolean}) => (isLastPage ? `${COLORS.primaryDisabled}` : COLORS.white)};
+
+  &:hover {
+    cursor: pointer;
+    background-color: ${COLORS.primaryLight};
   }
 `
