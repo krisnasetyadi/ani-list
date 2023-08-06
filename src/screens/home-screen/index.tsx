@@ -12,6 +12,9 @@ export default function () {
                 href={`https://anilist.co/api/v2/oauth/authorize?client_id=${process.env.REACT_APP_CLIENT_ID}&redirect_uri=${process.env.REACT_APP_REDIRECT_URL}&response_type=code`}>
                 Login
             </a>
+            <a style={{ 
+                backgroundColor: COLORS.info, color: COLORS.white, textDecoration: 'none', fontFamily: 'Roboto', marginTop: '50px',
+                padding: '10px', borderRadius: '5px'}} href={`${window.location}list`}>Go to List</a>
             <a style={{marginTop: '50px'}} href="https://github.com/krisnasetyadi/ani-list">SOURCE CODE</a>
         </div>
     )
